@@ -1,9 +1,9 @@
-package nullengine.data;
+package engine.data;
 
 import java.io.DataInput;
 import java.io.DataOutput;
 
-public class DataLong implements DataNumber {
+public class DataByte implements DataNumber {
     @Override
     public int intValue() {
         return 0;
@@ -36,7 +36,7 @@ public class DataLong implements DataNumber {
 
     @Override
     public DataType getType() {
-        return DataType.LONG;
+        return DataType.BYTE;
     }
 
     @Override
