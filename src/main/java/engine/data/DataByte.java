@@ -2,36 +2,16 @@ package engine.data;
 
 import java.io.DataInput;
 import java.io.DataOutput;
+import java.io.IOException;
 
 public class DataByte implements DataNumber {
-    @Override
-    public int intValue() {
-        return 0;
+    private byte value;
+
+    public DataByte() {
     }
 
-    @Override
-    public long longValue() {
-        return 0;
-    }
-
-    @Override
-    public float floatValue() {
-        return 0;
-    }
-
-    @Override
-    public double doubleValue() {
-        return 0;
-    }
-
-    @Override
-    public byte byteValue() {
-        return 0;
-    }
-
-    @Override
-    public short shortValue() {
-        return 0;
+    public DataByte(byte value) {
+        this.value = value;
     }
 
     @Override
@@ -41,16 +21,51 @@ public class DataByte implements DataNumber {
 
     @Override
     public DataElement deepClone() {
-        return null;
+        return new DataByte(value);
     }
 
     @Override
-    public void write(DataOutput output) {
-
+    public void write(DataOutput output) throws IOException {
+        output.write(value);
     }
 
     @Override
-    public void read(DataInput input) {
+    public void read(DataInput input) throws IOException {
+        value = input.readByte();
+    }
 
+    @Override
+    public Number getAsNumber() {
+        return value;
+    }
+
+    @Override
+    public int getAsInt() {
+        return value;
+    }
+
+    @Override
+    public long getAsLong() {
+        return value;
+    }
+
+    @Override
+    public float getAsFloat() {
+        return value;
+    }
+
+    @Override
+    public double getAsDouble() {
+        return value;
+    }
+
+    @Override
+    public byte getAsByte() {
+        return value;
+    }
+
+    @Override
+    public short getAsShort() {
+        return value;
     }
 }

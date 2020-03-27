@@ -2,16 +2,17 @@ package engine.data;
 
 import java.io.DataInput;
 import java.io.DataOutput;
+import java.io.IOException;
 
 public interface DataElement {
 
     DataType getType();
 
+    void write(DataOutput output) throws IOException;
+
+    void read(DataInput input) throws IOException;
+
     DataElement deepClone();
-
-    void write(DataOutput output);
-
-    void read(DataInput input);
 
     default boolean is(DataType type) {
         return getType() == type;
@@ -38,46 +39,46 @@ public interface DataElement {
     }
 
     default DataObject getAsObject() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("object");
     }
 
     default DataList getAsList() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("list");
     }
 
     default String getAsString() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("string");
     }
 
     default boolean getAsBoolean() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("boolean");
     }
 
     default Number getAsNumber() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("number");
     }
 
     default int getAsInt() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("int");
     }
 
     default long getAsLong() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("long");
     }
 
     default float getAsFloat() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("float");
     }
 
     default double getAsDouble() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("double");
     }
 
     default byte getAsByte() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("byte");
     }
 
     default short getAsShort() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("short");
     }
 }

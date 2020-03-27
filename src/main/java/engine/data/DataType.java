@@ -11,8 +11,10 @@ public enum DataType {
     SHORT(5, DataShort::new),
     INT(6, DataInt::new),
     LONG(7, DataLong::new),
-    FLOAT(8, DataFloat::new),
-    DOUBLE(9, DataDouble::new);
+    INT128(8, DataInt128::new),
+    FLOAT(9, DataFloat::new),
+    DOUBLE(10, DataDouble::new),
+    BYTE_ARRAY(11, DataByteArray::new);
 
     private static final DataType[] idToTypes = new DataType[10];
 

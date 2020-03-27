@@ -2,15 +2,17 @@ package engine.data;
 
 public interface DataNumber extends DataElement {
 
-    int intValue();
+    Number getAsNumber();
 
-    long longValue();
+    int getAsInt();
 
-    float floatValue();
+    long getAsLong();
 
-    double doubleValue();
+    float getAsFloat();
 
-    byte byteValue();
+    double getAsDouble();
 
-    short shortValue();
+    byte getAsByte();
+
+    short getAsShort();
 }
