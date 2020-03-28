@@ -3,6 +3,8 @@ package engine.data;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 public class DataFloat implements DataNumber {
     private float value;
@@ -67,5 +69,33 @@ public class DataFloat implements DataNumber {
     @Override
     public short getAsShort() {
         return (short) value;
+    }
+
+    @Override
+    public BigInteger getAsBigInteger() {
+        return getAsBigDecimal().toBigInteger();
+    }
+
+    @Override
+    public BigDecimal getAsBigDecimal() {
+        return BigDecimal.valueOf(value);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DataFloat dataFloat = (DataFloat) o;
+        return Float.compare(dataFloat.value, value) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Float.hashCode(value);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
     }
 }

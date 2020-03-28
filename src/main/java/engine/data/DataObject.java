@@ -2,14 +2,18 @@ package engine.data;
 
 import java.io.DataInput;
 import java.io.DataOutput;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class DataObject implements Map<String, DataElement>, DataElement {
 
     private final Map<String, DataElement> backingMap = new HashMap<>();
+
+    public DataObject() {
+    }
+
+    public DataObject(Map<String, DataElement> map) {
+        backingMap.putAll(map);
+    }
 
     @Override
     public int size() {
@@ -77,8 +81,13 @@ public class DataObject implements Map<String, DataElement>, DataElement {
     }
 
     @Override
-    public DataElement deepClone() {
-        return null;
+    public boolean isObject() {
+        return true;
+    }
+
+    @Override
+    public DataObject getAsDataObject() {
+        return this;
     }
 
     @Override
@@ -89,5 +98,37 @@ public class DataObject implements Map<String, DataElement>, DataElement {
     @Override
     public void read(DataInput input) {
 
+    }
+
+    @Override
+    public DataElement deepClone() {
+        DataObject dataObject = new DataObject();
+        forEach((key, value) -> dataObject.put(key, value.deepClone()));
+        return dataObject;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DataObject that = (DataObject) o;
+        return backingMap.equals(that.backingMap);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(backingMap);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder("{");
+        for (Entry<String, DataElement> entry : entrySet()) {
+            builder.append("\"").append(entry.getKey()).append("\": ").append(entry.getValue()).append(", ");
+        }
+        if (!isEmpty()) {
+            builder.delete(builder.length() - 2, builder.length());
+        }
+        return builder.append("}").toString();
     }
 }

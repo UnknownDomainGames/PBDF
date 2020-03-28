@@ -3,6 +3,9 @@ package engine.data;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.UUID;
 
 public interface DataElement {
 
@@ -38,11 +41,11 @@ public interface DataElement {
         return false;
     }
 
-    default DataObject getAsObject() {
+    default DataObject getAsDataObject() {
         throw new UnsupportedOperationException("object");
     }
 
-    default DataList getAsList() {
+    default DataList getAsDataList() {
         throw new UnsupportedOperationException("list");
     }
 
@@ -52,6 +55,10 @@ public interface DataElement {
 
     default boolean getAsBoolean() {
         throw new UnsupportedOperationException("boolean");
+    }
+
+    default DataNumber getAsDataNumber() {
+        throw new UnsupportedOperationException("number");
     }
 
     default Number getAsNumber() {
@@ -80,5 +87,21 @@ public interface DataElement {
 
     default short getAsShort() {
         throw new UnsupportedOperationException("short");
+    }
+
+    default BigInteger getAsBigInteger() {
+        throw new UnsupportedOperationException("bigInteger");
+    }
+
+    default UUID getAsUUID() {
+        throw new UnsupportedOperationException("uuid");
+    }
+
+    default BigDecimal getAsBigDecimal() {
+        throw new UnsupportedOperationException("bigDecimal");
+    }
+
+    default DataByteArray getAsDataByteArray() {
+        throw new UnsupportedOperationException("byteArray");
     }
 }

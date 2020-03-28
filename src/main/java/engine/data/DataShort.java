@@ -3,6 +3,8 @@ package engine.data;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 public class DataShort implements DataNumber {
     private short value;
@@ -68,5 +70,33 @@ public class DataShort implements DataNumber {
     @Override
     public short getAsShort() {
         return value;
+    }
+
+    @Override
+    public BigInteger getAsBigInteger() {
+        return BigInteger.valueOf(value);
+    }
+
+    @Override
+    public BigDecimal getAsBigDecimal() {
+        return BigDecimal.valueOf(value);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DataShort dataShort = (DataShort) o;
+        return value == dataShort.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
     }
 }

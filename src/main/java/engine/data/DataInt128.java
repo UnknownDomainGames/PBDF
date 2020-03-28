@@ -3,12 +3,19 @@ package engine.data;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.UUID;
 
 public class DataInt128 implements DataNumber {
     private long mostSignificantBits;
     private long leastSignificantBits;
 
     public DataInt128() {
+    }
+
+    public DataInt128(UUID uuid) {
+        this(uuid.getMostSignificantBits(), uuid.getLeastSignificantBits());
     }
 
     public DataInt128(long mostSignificantBits, long leastSignificantBits) {
@@ -19,6 +26,59 @@ public class DataInt128 implements DataNumber {
     @Override
     public DataType getType() {
         return DataType.INT128;
+    }
+
+    @Override
+    public Number getAsNumber() {
+        return getAsBigInteger();
+    }
+
+    @Override
+    public int getAsInt() {
+        return (int) leastSignificantBits;
+    }
+
+    @Override
+    public long getAsLong() {
+        return leastSignificantBits;
+    }
+
+    @Override
+    public float getAsFloat() {
+        return leastSignificantBits;
+    }
+
+    @Override
+    public double getAsDouble() {
+        return leastSignificantBits;
+    }
+
+    @Override
+    public byte getAsByte() {
+        return (byte) leastSignificantBits;
+    }
+
+    @Override
+    public short getAsShort() {
+        return (short) leastSignificantBits;
+    }
+
+    @Override
+    public BigInteger getAsBigInteger() {
+        BigInteger unsignedLeastSigBits = leastSignificantBits >= 0 ?
+                BigInteger.valueOf(leastSignificantBits) :
+                BigInteger.valueOf(leastSignificantBits & Long.MAX_VALUE).setBit(64);
+        return BigInteger.valueOf(mostSignificantBits).shiftLeft(64).add(unsignedLeastSigBits);
+    }
+
+    @Override
+    public BigDecimal getAsBigDecimal() {
+        return new BigDecimal(getAsBigInteger());
+    }
+
+    @Override
+    public UUID getAsUUID() {
+        return new UUID(mostSignificantBits, leastSignificantBits);
     }
 
     @Override
@@ -36,40 +96,5 @@ public class DataInt128 implements DataNumber {
     @Override
     public DataElement deepClone() {
         return new DataInt128(mostSignificantBits, leastSignificantBits);
-    }
-
-    @Override
-    public Number getAsNumber() {
-        return null;
-    }
-
-    @Override
-    public int getAsInt() {
-        return 0;
-    }
-
-    @Override
-    public long getAsLong() {
-        return 0;
-    }
-
-    @Override
-    public float getAsFloat() {
-        return 0;
-    }
-
-    @Override
-    public double getAsDouble() {
-        return 0;
-    }
-
-    @Override
-    public byte getAsByte() {
-        return 0;
-    }
-
-    @Override
-    public short getAsShort() {
-        return 0;
     }
 }

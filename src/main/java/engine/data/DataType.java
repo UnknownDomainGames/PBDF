@@ -43,5 +43,4 @@ public enum DataType {
     public DataElement create() {
         return factory.get();
     }
-
 }

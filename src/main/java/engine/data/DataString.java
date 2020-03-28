@@ -3,6 +3,7 @@ package engine.data;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.util.Objects;
 
 public class DataString implements DataElement {
     private String value;
@@ -17,6 +18,16 @@ public class DataString implements DataElement {
     @Override
     public DataType getType() {
         return DataType.STRING;
+    }
+
+    @Override
+    public boolean isString() {
+        return true;
+    }
+
+    @Override
+    public String getAsString() {
+        return value;
     }
 
     @Override
@@ -35,7 +46,20 @@ public class DataString implements DataElement {
     }
 
     @Override
-    public String getAsString() {
-        return value;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DataString that = (DataString) o;
+        return Objects.equals(value, that.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return "\"" + value + "\"";
     }
 }

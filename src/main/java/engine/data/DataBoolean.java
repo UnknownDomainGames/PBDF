@@ -20,6 +20,16 @@ public class DataBoolean implements DataElement {
     }
 
     @Override
+    public boolean isBoolean() {
+        return true;
+    }
+
+    @Override
+    public boolean getAsBoolean() {
+        return value;
+    }
+
+    @Override
     public void write(DataOutput output) throws IOException {
         output.writeBoolean(value);
     }
@@ -35,7 +45,20 @@ public class DataBoolean implements DataElement {
     }
 
     @Override
-    public boolean getAsBoolean() {
-        return value;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DataBoolean that = (DataBoolean) o;
+        return value == that.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Boolean.hashCode(value);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
     }
 }
