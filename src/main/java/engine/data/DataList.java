@@ -2,6 +2,7 @@ package engine.data;
 
 import java.io.DataInput;
 import java.io.DataOutput;
+import java.io.IOException;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,13 +59,22 @@ public class DataList extends AbstractList<DataElement> implements DataElement, 
     }
 
     @Override
-    public void write(DataOutput output) {
-
+    public void write(DataOutput output) throws IOException {
+        for (DataElement element : this) {
+            output.writeByte(element.getType().getId());
+            element.write(output);
+        }
+        output.writeByte(DataType.END.getId());
     }
 
     @Override
-    public void read(DataInput input) {
-
+    public void read(DataInput input) throws IOException {
+        DataType type;
+        while ((type = DataType.valueOf(input.readByte())) != DataType.END) {
+            DataElement element = type.create();
+            element.read(input);
+            add(element);
+        }
     }
 
     @Override
@@ -72,6 +82,20 @@ public class DataList extends AbstractList<DataElement> implements DataElement, 
         DataList dataList = new DataList();
         forEach(dataElement -> dataList.add(dataElement.deepClone()));
         return dataList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        DataList that = (DataList) o;
+        return backingList.equals(that.backingList);
+    }
+
+    @Override
+    public int hashCode() {
+        return backingList.hashCode();
     }
 
     @Override

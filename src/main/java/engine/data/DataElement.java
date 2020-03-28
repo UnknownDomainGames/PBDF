@@ -50,7 +50,7 @@ public interface DataElement {
     }
 
     default String getAsString() {
-        throw new UnsupportedOperationException("string");
+        return toString();
     }
 
     default boolean getAsBoolean() {

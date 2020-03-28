@@ -2,10 +2,13 @@ package engine.data;
 
 import java.io.DataInput;
 import java.io.DataOutput;
-import java.util.*;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class DataObject implements Map<String, DataElement>, DataElement {
-
     private final Map<String, DataElement> backingMap = new HashMap<>();
 
     public DataObject() {
@@ -91,13 +94,26 @@ public class DataObject implements Map<String, DataElement>, DataElement {
     }
 
     @Override
-    public void write(DataOutput output) {
-
+    public void write(DataOutput output) throws IOException {
+        for (Entry<String, DataElement> entry : entrySet()) {
+            String key = entry.getKey();
+            DataElement value = entry.getValue();
+            output.writeByte(value.getType().getId());
+            output.writeUTF(key);
+            value.write(output);
+        }
+        output.writeByte(DataType.END.getId());
     }
 
     @Override
-    public void read(DataInput input) {
-
+    public void read(DataInput input) throws IOException {
+        DataType type;
+        while ((type = DataType.valueOf(input.readByte())) != DataType.END) {
+            String key = input.readUTF();
+            DataElement value = type.create();
+            value.read(input);
+            put(key, value);
+        }
     }
 
     @Override
@@ -117,7 +133,7 @@ public class DataObject implements Map<String, DataElement>, DataElement {
 
     @Override
     public int hashCode() {
-        return Objects.hash(backingMap);
+        return backingMap.hashCode();
     }
 
     @Override

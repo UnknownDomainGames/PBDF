@@ -5,6 +5,7 @@ import java.io.DataOutput;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Objects;
 import java.util.UUID;
 
 public class DataInt128 implements DataNumber {
@@ -96,5 +97,24 @@ public class DataInt128 implements DataNumber {
     @Override
     public DataElement deepClone() {
         return new DataInt128(mostSignificantBits, leastSignificantBits);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DataInt128 that = (DataInt128) o;
+        return mostSignificantBits == that.mostSignificantBits &&
+                leastSignificantBits == that.leastSignificantBits;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mostSignificantBits, leastSignificantBits);
+    }
+
+    @Override
+    public String toString() {
+        return getAsBigInteger().toString();
     }
 }

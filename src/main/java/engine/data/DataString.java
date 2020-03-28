@@ -4,6 +4,7 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.UUID;
 
 public class DataString implements DataElement {
     private String value;
@@ -28,6 +29,11 @@ public class DataString implements DataElement {
     @Override
     public String getAsString() {
         return value;
+    }
+
+    @Override
+    public UUID getAsUUID() {
+        return UUID.fromString(value);
     }
 
     @Override

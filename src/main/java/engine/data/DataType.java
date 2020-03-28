@@ -3,20 +3,21 @@ package engine.data;
 import java.util.function.Supplier;
 
 public enum DataType {
-    OBJECT(0, DataObject::new),
-    LIST(1, DataList::new),
-    STRING(2, DataString::new),
-    BOOLEAN(3, DataBoolean::new),
-    BYTE(4, DataByte::new),
-    SHORT(5, DataShort::new),
-    INT(6, DataInt::new),
-    LONG(7, DataLong::new),
-    INT128(8, DataInt128::new),
-    FLOAT(9, DataFloat::new),
-    DOUBLE(10, DataDouble::new),
-    BYTE_ARRAY(11, DataByteArray::new);
+    END(0, () -> DataEnd.END),
+    OBJECT(1, DataObject::new),
+    LIST(2, DataList::new),
+    STRING(3, DataString::new),
+    BOOLEAN(4, DataBoolean::new),
+    BYTE(5, DataByte::new),
+    SHORT(6, DataShort::new),
+    INT(7, DataInt::new),
+    LONG(8, DataLong::new),
+    INT128(9, DataInt128::new),
+    FLOAT(10, DataFloat::new),
+    DOUBLE(11, DataDouble::new),
+    BYTE_ARRAY(12, DataByteArray::new);
 
-    private static final DataType[] idToTypes = new DataType[10];
+    private static final DataType[] idToTypes = new DataType[13];
 
     private final byte id;
     private final Supplier<DataElement> factory;
