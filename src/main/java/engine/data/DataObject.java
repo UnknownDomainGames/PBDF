@@ -3,10 +3,7 @@ package engine.data;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class DataObject implements Map<String, DataElement>, DataElement {
     private final Map<String, DataElement> backingMap = new HashMap<>();
@@ -46,6 +43,46 @@ public class DataObject implements Map<String, DataElement>, DataElement {
     @Override
     public DataElement put(String key, DataElement value) {
         return backingMap.put(key, value);
+    }
+
+    public DataElement put(String key, boolean value) {
+        return put(key, new DataBoolean(value));
+    }
+
+    public DataElement put(String key, String value) {
+        return put(key, new DataString(value));
+    }
+
+    public DataElement put(String key, int value) {
+        return put(key, new DataInt(value));
+    }
+
+    public DataElement put(String key, long value) {
+        return put(key, new DataLong(value));
+    }
+
+    public DataElement put(String key, float value) {
+        return put(key, new DataFloat(value));
+    }
+
+    public DataElement put(String key, double value) {
+        return put(key, new DataDouble(value));
+    }
+
+    public DataElement put(String key, byte value) {
+        return put(key, new DataByte(value));
+    }
+
+    public DataElement put(String key, short value) {
+        return put(key, new DataShort(value));
+    }
+
+    public DataElement put(String key, UUID value) {
+        return put(key, new DataInt128(value));
+    }
+
+    public DataElement put(String key, byte[] value) {
+        return put(key, new DataByteArray(value));
     }
 
     @Override

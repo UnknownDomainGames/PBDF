@@ -3,10 +3,7 @@ package engine.data;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
-import java.util.AbstractList;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.RandomAccess;
+import java.util.*;
 
 public class DataList extends AbstractList<DataElement> implements DataElement, List<DataElement>, RandomAccess {
     private final List<DataElement> backingList = new ArrayList<>();
@@ -15,7 +12,11 @@ public class DataList extends AbstractList<DataElement> implements DataElement, 
     }
 
     public DataList(List<DataElement> list) {
-        backingList.addAll(list);
+        addAll(list);
+    }
+
+    public DataList(DataElement... list) {
+        addAll(list);
     }
 
     @Override
@@ -31,6 +32,50 @@ public class DataList extends AbstractList<DataElement> implements DataElement, 
     @Override
     public void add(int index, DataElement element) {
         backingList.add(index, element);
+    }
+
+    public void add(boolean value) {
+        add(new DataBoolean(value));
+    }
+
+    public void add(String value) {
+        add(new DataString(value));
+    }
+
+    public void add(int value) {
+        add(new DataInt(value));
+    }
+
+    public void add(long value) {
+        add(new DataLong(value));
+    }
+
+    public void add(float value) {
+        add(new DataFloat(value));
+    }
+
+    public void add(double value) {
+        add(new DataDouble(value));
+    }
+
+    public void add(byte value) {
+        add(new DataByte(value));
+    }
+
+    public void add(short value) {
+        add(new DataShort(value));
+    }
+
+    public void add(UUID value) {
+        add(new DataInt128(value));
+    }
+
+    public void add(byte[] value) {
+        add(new DataByteArray(value));
+    }
+
+    public boolean addAll(DataElement... elements) {
+        return Collections.addAll(this, elements);
     }
 
     @Override
