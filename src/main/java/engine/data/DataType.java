@@ -17,12 +17,13 @@ public enum DataType {
     DOUBLE(11, DataDouble::new),
     BYTE_ARRAY(12, DataByteArray::new);
 
-    private static final DataType[] idToTypes = new DataType[13];
+    private static final DataType[] idToTypes;
 
     private final byte id;
     private final Supplier<DataElement> factory;
 
     static {
+        idToTypes = new DataType[DataType.values().length];
         for (DataType value : DataType.values()) {
             idToTypes[value.id] = value;
         }
