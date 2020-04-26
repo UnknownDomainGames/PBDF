@@ -35,7 +35,7 @@ public class DataByteArray implements DataElement, Iterable<Byte> {
 
     @Override
     public Iterator<Byte> iterator() {
-        return new Iterator<>() {
+        return new Iterator<Byte>() {
             private int i = 0;
 
             @Override
