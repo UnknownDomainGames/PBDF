@@ -19,6 +19,19 @@ public class DataInt128 implements DataNumber {
         this(uuid.getMostSignificantBits(), uuid.getLeastSignificantBits());
     }
 
+    public DataInt128(BigInteger value) {
+        if (value.bitLength() >= 128) {
+            throw new IllegalArgumentException("Too big integer");
+        }
+        byte[] bytes = value.toByteArray();
+        for (int i = 0; i < 8; i++) {
+            mostSignificantBits = (mostSignificantBits << 8) | (bytes[i] & 0xff);
+        }
+        for (int i = 8; i < 16; i++) {
+            leastSignificantBits = (leastSignificantBits << 8) | (bytes[i] & 0xff);
+        }
+    }
+
     public DataInt128(long mostSignificantBits, long leastSignificantBits) {
         this.mostSignificantBits = mostSignificantBits;
         this.leastSignificantBits = leastSignificantBits;
@@ -68,7 +81,7 @@ public class DataInt128 implements DataNumber {
     public BigInteger getAsBigInteger() {
         BigInteger unsignedLeastSigBits = leastSignificantBits >= 0 ?
                 BigInteger.valueOf(leastSignificantBits) :
-                BigInteger.valueOf(leastSignificantBits & Long.MAX_VALUE).setBit(64);
+                BigInteger.valueOf(leastSignificantBits & Long.MAX_VALUE).setBit(63);
         return BigInteger.valueOf(mostSignificantBits).shiftLeft(64).add(unsignedLeastSigBits);
     }
 
